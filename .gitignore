@@ -135,3 +135,7 @@ local.properties
 
 # macOS
 **/.DS_STORE
+
+# Spring application.properties for Dev and Prod
+application-prod.properties
+application-dev.properties
