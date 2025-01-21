@@ -1,9 +1,9 @@
 # Cloud Run Validator
 
-A template repository for a Cloud Run microservice, written in Java. [Link](https://github.com/GoogleCloudPlatform/cloud-code-custom-samples-example/)
+A template repository for a Cloud Run Spring-MVC, written in Java
 
-### Prerequisite
-Create 2 files applicaiton-dev.properties and application-prod.properties under resources dir. Values are different for reach enviroment.
+## Prerequisite
+Create 2 files <em>applicaiton-dev.properties</em> and <em>application-prod.properties</em> under __resources__ dir. Values are different for reach enviroment.
 ```bash
 # jpa - postgresql
 spring.datasource.url=jdbc:postgresql://{db_server_host}:{db_port}/{db_name}
@@ -11,18 +11,42 @@ spring.datasource.username={user}
 spring.datasource.password={password}
 ```
 
-### Run
+## Run
 ```bash
 mvn spring-boot:run
 ```
-### Build and push image to Artifact Registry
+
+## Test
+**Execute Cloud Run Job**
+```bash
+http../validator?opt=job
+```
+
+**Cloud Storage write and read - directly**
+```bash
+http../validator?opt=storage.write&bucket={bucket-name}&env=vpc
+http../validator?opt=storage.read&bucket={bucket-name}&env=vpc
+```
+
+**Cloud Storage write and read - via volumn mount (file)**
+```bash
+http../validator?opt=storage.write&&env=local
+http../validator?opt=storage.read&env=local
+```
+
+**JDBC - public or private ip depend where we deploy the app**
+```bash
+http../validator?opt=jdbc&&table={tableName}
+```
+
+## Build and push image to Artifact Registry
 
 ```bash
 cd cloud-run-java
 mvn compile jib:build
 ```
 
-### Reference
+## Reference
 [Cloud code cutom samples][Link]
 
 [Link]: https://github.com/GoogleCloudPlatform/cloud-code-custom-samples-example/
