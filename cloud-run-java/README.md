@@ -1,6 +1,6 @@
 # Cloud Run Validator
 
-A template repository for a Cloud Run Spring-MVC, written in Java
+A template repository for a Cloud Run to call Cloud Storage, local file (via mounting), Cloud SQL w/wo VPC (private/public ip), Cloud Run Job. Written in Java.
 
 ## Prerequisite
 Create 2 files <em>applicaiton-dev.properties</em> and <em>application-prod.properties</em> under __resources__ dir. Values are different for reach enviroment.
