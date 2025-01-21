@@ -135,7 +135,7 @@ limitations under the License.
         <version>3.4.2</version>
         <configuration>
           <to>
-            <image>gcr.io/$PROJECT_ID/microservice-template:manual</image>
+            <image>gcr.io/cellmartsanbox/cloud-run-validator</image>
           </to>
         </configuration>
       </plugin>
