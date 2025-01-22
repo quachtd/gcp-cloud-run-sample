@@ -38,7 +38,7 @@ public class MyJobs implements CommandLineRunner {
     // GCS: for cloud storage, using volume-mount, so it's just as local file.
     String filePath = "/import_log";
     String fileName = FILE_NAME;
-    System.out.println("File path:" + filePath + "/" + fileName);
+    System.out.println("#File path:" + filePath + "/" + fileName);
     System.out.println("#So, use syntax of standard java api to read file. Don't use Cloud Storage syntax");
 
     // SQL: sample query sql

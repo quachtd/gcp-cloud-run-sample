@@ -18,14 +18,6 @@ limitations under the License.
   <version>0.0.1</version>
   <packaging>jar</packaging>
 
-  <!--  The parent pom defines common style checks and testing strategies for our samples.
-	Removing or replacing it should not affect the execution of the samples in anyway. 
-  <parent>
-    <groupId>com.google.cloud.samples</groupId>
-    <artifactId>shared-configuration</artifactId>
-    <version>1.2.0</version>
-  </parent>
-  -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -33,19 +25,6 @@ limitations under the License.
     <maven.compiler.source>17</maven.compiler.source>
   </properties>
 
-<!-- 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <artifactId>libraries-bom</artifactId>
-        <groupId>com.google.cloud</groupId>
-        <scope>import</scope>
-        <type>pom</type>
-        <version>26.32.0</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
--->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -105,25 +84,6 @@ limitations under the License.
     </dependency>
   </dependencies>
 
-  <!--
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <mainClass>com.example.JobsExample</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  -->
   <build>
     <plugins>
       <plugin>
