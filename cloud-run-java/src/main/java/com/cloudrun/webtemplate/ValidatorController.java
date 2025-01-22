@@ -52,8 +52,16 @@ public class ValidatorController {
 
     if (opt.equals("job")) {
       logger.info("execute job");
+
+      String jobName;
+      if (param.equals("nothing")) {
+        jobName = "job-quickstart";
+        param = jobName;
+      } else
+        jobName = param;
+      
       try (JobsClient jobsClient = JobsClient.create()) {        
-        JobName job = JobName.of("cellmartsanbox", "us-west1", "job-quickstart");
+        JobName job = JobName.of("cellmartsanbox", "us-west1", jobName);
         jobsClient.runJobAsync(job);
         output = "Job exec asyn!";
       } catch (Exception ex) {
@@ -63,9 +71,7 @@ public class ValidatorController {
 
     if (opt.equals("db2rest")) {
       logger.info("call rest endpoint");
-      String http_endpoint = "https://gcp2.quachtd.com";
-      if (env.equals("vpc"))
-        http_endpoint = "https://db2rest-backend-81785470518.us-west1.run.app";
+      String http_endpoint = environment.getProperty("db2rest_endpoint");
       String url = http_endpoint + "/v1/rdbms/cellmart/import_log?limit=1";
 
       param = "url:" + url;

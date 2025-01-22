@@ -11,6 +11,8 @@ Create 2 files <em>applicaiton-dev.properties</em> and <em>application-prod.prop
 spring.datasource.url=jdbc:postgresql://{db_server_host}:{db_port}/{db_name}
 spring.datasource.username={user}
 spring.datasource.password={password}
+# db2rest endpoint
+db2rest_endpoint=https://{endpoint}
 ```
 
 ## Run
