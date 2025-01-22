@@ -1,17 +1,27 @@
 # Cloud Run Job
 
-## Build and deploy
-```tfvars
-gcloud run jobs deploy job-quickstart \
-    --source . \
-    --tasks 1 \
-    --set-env-vars SLEEP_MS=10000 \
-    --set-env-vars FAIL_RATE=0.1 \
-    --max-retries 3 \
-    --region us-west1 \
-    --project=cellmartsandbox
+A template repository for a Cloud Run Job with Spring boot to call local file (Cloud Storage via mounting), Cloud SQL w/wo VPC (private/public ip). Written in Java.
+
+## Prerequisite
+Java 17
+
+Create 2 files <em>applicaiton-dev.properties</em> and <em>application-prod.properties</em> under __resources__ dir. Values are different for reach enviroment.
+```bash
+# jpa - postgresql
+spring.datasource.url=jdbc:postgresql://{db_server_host}:{db_port}/{db_name}
+spring.datasource.username={user}
+spring.datasource.password={password}
 ```
 
-## Reference
-[Link](https://cloud.google.com/run/docs/quickstarts/jobs/build-create-java)
+## Run
+```bash
+mvn spring-boot:run
+```
+
+## Build and push container image to Artifact Registry
+
+```bash
+mvn compile jib:build
+```
+
 
