@@ -1,0 +1,30 @@
+{
+  "configurations": [
+    {
+      "name": "Cloud Run: Run/Debug Locally",
+      "type": "cloudcode.cloudrun",
+      "request": "launch",
+      "build": {
+        "jibMaven": {
+          "image": "gcr.io/$PROJECT_ID/microservice-template:manual",
+          "path": "pom.xml",
+          "project": "com.cloudrun:microservice-template"
+        }
+      },
+      "image": "cloud-run-microservice-template-java",
+      "service": {
+        "name": "cloud-run-microservice-template-java",
+        "containerPort": 8080,
+        "resources": {
+          "limits": {
+            "memory": "256Mi"
+          }
+        }
+      },
+      "target": {
+        "minikube": {}
+      },
+      "watch": true
+    }
+  ]
+}
