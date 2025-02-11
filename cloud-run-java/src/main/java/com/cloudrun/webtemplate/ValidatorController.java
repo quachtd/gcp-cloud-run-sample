@@ -185,6 +185,24 @@ public class ValidatorController {
       }      
     }
 
+    if (opt.equals("rules")) {
+      logger.info("call rest EngineRule");
+
+      if (param.equals("nothing"))
+        param = "1";
+
+      String http_endpoint = environment.getProperty("rules_endpoint");
+      String url = http_endpoint + "/rules/" + param;
+
+      param = "url:" + url;
+
+      try {
+        output = restTemplate.getForObject(url, String.class);
+      } catch (Exception ex) {
+        output = "ERROR:" + ex.getMessage();
+      }
+    }
+
     model.addAttribute("opt", opt);
     model.addAttribute("myparam", param);
     model.addAttribute("env", env);
