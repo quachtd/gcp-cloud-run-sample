@@ -43,7 +43,7 @@ limitations under the License.
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>libraries-bom</artifactId>
-        <version>26.53.0</version>
+        <version>26.54.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -70,6 +70,7 @@ limitations under the License.
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-run</artifactId>
     </dependency>
+
     <!-- Cloud Storage-->
     <dependency>
       <groupId>com.google.cloud</groupId>

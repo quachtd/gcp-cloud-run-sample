@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +20,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.cloud.run.v2.EnvVar;
 import com.google.cloud.run.v2.JobName;
 import com.google.cloud.run.v2.JobsClient;
+import com.google.cloud.run.v2.RunJobRequest;
+import com.google.cloud.run.v2.RunJobRequest.Overrides;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
@@ -59,22 +64,69 @@ public class ValidatorController {
         param = jobName;
       } else
         jobName = param;
-      
+
+      try (JobsClient jobsClient2 = JobsClient.create()) {
+        List<EnvVar> envVars = Arrays.asList(
+          EnvVar.newBuilder().setName("TABLE").setValue("service_rule").build()
+        );
+        //String[] overrideArgs = {"arg1=value1", "arg2=value2"};        
+        Overrides.Builder overridesBuilder = Overrides.newBuilder();
+        overridesBuilder
+          .addContainerOverridesBuilder()
+          .addAllEnv(envVars);
+          //.addAllArgs(Arrays.asList(overrideArgs));
+
+        RunJobRequest request =
+            RunJobRequest.newBuilder()
+                .setName(JobName.of("cellmartsanbox", "us-west1", jobName).toString())
+                //.setValidateOnly(true)
+                //.setEtag("etag3123477")
+                .setOverrides(
+                  overridesBuilder.build()
+                ).build();
+        //Execution response = jobsClient2.runJobAsync(request).get();
+        jobsClient2.runJobAsync(request);
+
+      } catch (Exception ex) {
+        output = "ERROR:" + ex.getMessage();
+        logger.error(output, ex);
+      }
+
+      /*
       try (JobsClient jobsClient = JobsClient.create()) {        
         JobName job = JobName.of("cellmartsanbox", "us-west1", jobName);
-        jobsClient.runJobAsync(job);
+        
+        RunJobRequest.Builder runJobRequestBuilder = RunJobRequest.newBuilder();
+        String[] overrideArgs = {"arg1=value1", "arg2=value2"};
+        Overrides.Builder overridesBuilder = Overrides.newBuilder();
+        overridesBuilder.addContainerOverridesBuilder().addAllArgs(Arrays.asList(overrideArgs));
+        //overridesBuilder.setTimeout(Duration.newBuilder().setSeconds(600).build()); // Timeout of 10 minutes
+  
+        runJobRequestBuilder.setOverrides(overridesBuilder.build());
+        runJobRequestBuilder.setName(job.toString());
+  
+        RunJobRequest runJobRequest = runJobRequestBuilder.build();
+        
+        
+        jobsClient.runJobAsync(runJobRequest);
         output = "Job exec asyn!";
       } catch (Exception ex) {
         output = "ERROR:" + ex.getMessage();
       }
+      */
     }
 
     if (opt.equals("db2rest")) {
       logger.info("call rest endpoint");
       String http_endpoint = environment.getProperty("db2rest_endpoint");
-      String url = http_endpoint + "/v1/rdbms/cellmart/import_log?limit=1";
+      String url = http_endpoint + "/v1/rdbms/cellmart/";
 
-      param = "url:" + url;
+      if (param.equals("nothing")) {
+        url = url + "import_log?limit=1";
+      } else {
+        url = url + param;
+      }
+      param = url;
 
       try {
         output = restTemplate.getForObject(url, String.class);
